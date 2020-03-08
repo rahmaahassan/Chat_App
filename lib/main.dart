@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'new_message.dart';
+
 main(){
   runApp(MyChat());
 }
@@ -12,6 +14,13 @@ class MyChat extends StatefulWidget {
 
 class _MyChatState extends State<MyChat> {
   List<String> msg = [];
+
+  _addNewMessage(String ms){
+    setState(() {
+      msg.add(ms);
+      saveData();
+    });
+  }
 
   saveData()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,7 +38,7 @@ class _MyChatState extends State<MyChat> {
     getData();
   }
 
-  var _controller = new TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +70,7 @@ class _MyChatState extends State<MyChat> {
             ),
             Expanded(
               child: ListView.builder(
+                reverse: true,
                 itemCount: msg.length??0,
                 itemBuilder: (_,index){
                   return InkWell(
@@ -69,46 +79,23 @@ class _MyChatState extends State<MyChat> {
                   msg.removeAt(msg.length - 1 - index);
                   saveData();
                   });},
-                    child: Card(
-                      elevation: 2,
-                      margin: EdgeInsets.all(5),
-                      color: Colors.brown.shade400,
-                      child: Text(msg[index],style: TextStyle(fontFamily: 'Josefin_Sans',fontSize: 20),),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        elevation: 8,
+                        margin: EdgeInsets.all(5),
+                        color: Colors.brown.shade400,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(msg[msg.length - 1 - index],style: TextStyle(fontFamily: 'Josefin_Sans',fontSize: 20),),
+                        ),
+                      ),
                     ),
                   );
                 },
               ),
             ),
-            Card(
-                color: Colors.black12,
-                elevation: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    TextField(
-                      cursorColor: Colors.white,
-                      controller: _controller,
-                      decoration:
-                      InputDecoration(labelText: 'Enter your message...',labelStyle: TextStyle(color: Colors.white,fontFamily: 'Josefin_Sans'),),
-                    ),
-                    RaisedButton(
-                      highlightColor: Colors.grey,
-                      color: Colors.black54,
-                      child: Text('Add Message',style: TextStyle(fontFamily: 'Josefin_Sans'),),
-                      onPressed: () {
-                        if (_controller.text.isNotEmpty) {
-                          setState(() {
-                            msg.add(_controller.text);
-                            _controller.clear();
-                            saveData();
-                          });
-                        }
-                      },
-                    )
-                  ],
-                ),
-              ),
+            NewMessage(addMessage: _addNewMessage),
           ],
         ),
       ),
