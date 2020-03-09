@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+
 class NewMessage extends StatelessWidget {
   Function addMessage;
   NewMessage({this.addMessage});
 
-  Text _controller = new TextEditingController();
+  var _controller = new TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,25 +17,20 @@ class NewMessage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          TextField(
-            cursorColor: Colors.blue,
-            controller: _controller,
-            decoration: InputDecoration(
-              labelText: 'Enter your message...',
-              labelStyle: TextStyle(color: Colors.blue),
-            ),
-          ),
+      TextField(
+      cursorColor: Colors.blue,
+        controller: _controller,
+        decoration:
+        InputDecoration(labelText: 'Enter your message...',labelStyle: TextStyle(color: Colors.blue),),
+      ),
           RaisedButton(
             highlightColor: Colors.white,
             color: Colors.blue,
-            child: Text(
-              'Add Message',
-              style: TextStyle(fontFamily: 'Josefin_Sans'),
-            ),
+            child: Text('Add Message',style: TextStyle(fontFamily: 'Josefin_Sans'),),
             onPressed: () {
               if (_controller.text.isNotEmpty) {
-                addMessage(_controller.text);
-                //_controller.clear();
+                  addMessage(_controller.text);
+                  //_controller.clear();
               }
             },
           )
