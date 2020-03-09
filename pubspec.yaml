@@ -45,6 +45,9 @@ flutter:
   assets:
     - assets/images/ahmed.jpg
     - assets/images/mekha.jpg
+    - assets/images/gdg.jpg
+    - assets/images/shrouk.jpg
+    - assets/images/ssaarr.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
